@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TemuKembali Laporan Barang Hilang</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+<style>
+        :root{
+          --bg:#eef8f6;
+          --card:#ffffff;
+          --tx:#0f2a2a;
+          --mut:#5b7878;
+          --pri:#0f766e;
+          --pri2:#d5f3ee;
+          --bd:#cfe6e2;
+          --ok:#0f7a4f;
+          --warn:#b45309;
+          --bad:#be123c;
+          --onpri:#ffffff;
+          --h1:#0f766e;
+          --h2:#0e7490;
+          --shadow:0 4px 14px rgba(15,118,110,.08);
+          box-sizing:border-box;
+          padding-top:env(safe-area-inset-top,0px);
+          padding-bottom:env(safe-area-inset-bottom,0px)
+        }
+        @media(prefers-color-scheme:dark)
+        {:root:not([data-theme="light"]){
+          --bg:#07201f;
+          --card:#0d2e2c;
+          --tx:#e6f6f4;
+          --mut:#8fb5b1;
+          --pri:#2dd4bf;
+          --pri2:#123f3c;
+          --bd:#1d4b48;
+          --ok:#4ade9a;
+          --warn:#fbbf5a;
+          --bad:#fb7185;
+          --onpri:#042f2e;
+          --h1:#0f766e;
+          --h2:#155e75;
+          --shadow:0 4px 14px rgba(0,0,0,.35);
+          color-scheme:dark
+          }
+        }
+        :root[data-theme="dark"]{
+          --bg:#07201f;
+          --card:#0d2e2c;
+          --tx:#e6f6f4;
+          --mut:#8fb5b1;
+          --pri:#2dd4bf;
+          --pri2:#123f3c;
+          --bd:#1d4b48;
+          --ok:#4ade9a;
+          --warn:#fbbf5a;
+          --bad:#fb7185;
+          --onpri:#042f2e;
+          --h1:#0f766e;
+          --h2:#155e75;
+          --shadow:0 4px 14px rgba(0,0,0,.35);
+          color-scheme:dark;
+        }
+        *{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+        body{
+          margin:0;
+          background:var(--bg);
+          color:var(--tx);
+          font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55
+        }
+        header{
+          background:var(--card);
+          border-bottom:3px solid var(--pri);
+          position:sticky;
+          top:env(safe-area-inset-top,0px);
+          z-index:5;
+          box-shadow:var(--shadow);
+        }
+        .bar{
+          max-width:none;
+          margin:0;
+          display:flex;
+          align-items:center;
+          gap:12px;
+          padding:10px 16px;
+          flex-wrap:wrap}
+        .logo{
+          font-weight:800;
+          font-size:1.2rem;
+          color:var(--pri);
+          margin-right:auto;
+          letter-spacing:-.01em;
+        }
+        nav{
+          display:flex;
+          gap:4px;
+          flex-wrap:wrap
+        }
+        nav a{
+          padding:7px 14px;
+          border-radius:99px;
+          color:var(--mut);
+          text-decoration:none;
+          font-size:.9rem;
+          font-weight:600;
+        }
+        nav a.on,nav a:hover{
+          background:var(--pri2);
+          color:var(--pri)
+        }
+        main{
+          max-width:1040px;
+          margin:auto;
+          padding:20px 16px 48px
+        }
+        .hero{
+          background:linear-gradient(135deg,var(--h1),var(--h2));
+          color:#fff;border-radius:22px;
+          padding:36px 26px;margin-bottom:22px;
+          box-shadow:var(--shadow);
+        }
+        .hero h1{
+          margin:0 0 6px;
+          font-size:1.8rem;
+          letter-spacing:-.02em
+        }
+        .hero p{margin:0 0 18px;opacity:.92
+        }
+        .hero button{
+          background:#fff;
+          color:#0f766e
+        }
+        .sbox{
+          display:flex;
+          gap:8px;flex-wrap:wrap}
+        .sbox input,.sbox select{
+          flex:1;
+          min-width:140px}
+        input,select,textarea{
+          width:100%;
+          padding:10px 14px;
+          border:1px solid var(--bd);
+          border-radius:12px;
+          background:var(--card);
+          color:var(--tx);font:inherit
+        }
+        input:focus,select:focus,textarea:focus{
+          outline:2px solid var(--pri);
+          outline-offset:1px
+        }
+        textarea{
+          min-height:90px;
+          resize:vertical
+        }
+        button{
+          font:inherit;
+          cursor:pointer;
+          border:0;
+          border-radius:12px;
+          padding:10px 18px;
+          background:var(--pri);
+          color:var(--onpri);
+          font-weight:700
+        }
+        button.sec{
+          background:var(--pri2);
+          color:var(--pri)
+        }
+        button.del{
+          background:transparent;
+          color:var(--bad);
+          padding:6px 8px
+        }
+        .stats{
+          display:grid;
+          grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+          gap:12px;
+          margin-bottom:22px
+        }
+        .stat{
+          background:var(--card);
+          border:1px solid var(--bd);
+          border-left:5px solid var(--pri);
+          border-radius:14px;
+          padding:14px;
+          box-shadow:var(--shadow)
+        }
+        .stat b{
+          display:block;
+          font-size:1.7rem;
+          color:var(--pri)
+        }
+        .stat span{
+          color:var(--mut);
+          font-size:.85rem
+        }
+        h2{
+          margin:0 0 12px;
+          font-size:1.25rem
+        }
+        .grid{
+          display:grid;
+          grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+          gap:14px
+        }
+        .item{
+          background:var(--card);
+          border:1px solid var(--bd);
+          border-radius:16px;
+          padding:16px;
+          box-shadow:var(--shadow)
+        }
+        .item h3{
+          margin:6px 0 4px;
+          font-size:1rem
+        }
+        .item p{
+          margin:2px 0;
+          color:var(--mut);
+          font-size:.88rem
+        }
+        .badge{
+          display:inline-block;
+          padding:2px 10px;
+          border-radius:99px;
+          font-size:.75rem;
+          font-weight:700;
+          background:var(--pri2);
+          color:var(--pri)
+        }
+        .s-Hilang{
+          background:#ffe4e9;
+          color:var(--bad)
+        }
+        .s-Ditemukan{
+          background:#d9f5e6;
+          color:var(--ok)
+        }
+        .s-Verifikasi{
+          background:#fef0cf;
+          color:var(--warn)
+        }
+        .s-Dikembalikan{
+          background:#d5f3ee;
+          color:var(--pri)
+        }
+        @media(prefers-color-scheme:dark)
+        {
+          .s-Hilang{
+            background:#3d1f2a
+          }
+          .s-Ditemukan{
+            background:#123b2b
+          } 
+          .s-Verifikasi{
+            background:#3a301a
+          }
+          .s-Dikembalikan{
+            background:#123f3c
+          }
+        }
+        .panel{
+          background:var(--card);
+          border:1px solid var(--bd);
+          border-radius:18px;
+          padding:22px;
+          max-width:640px;
+          box-shadow:var(--shadow);
+        }
+        label{
+          display:block;
+          font-weight:600;
+          font-size:.88rem;
+          margin:12px 0 4px;
+        }
+        .row{
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:12px;
+        }
+        @media(max-width:560px)
+        {
+          .row{
+            grid-template-columns:1fr
+          }
+        }
+        .tw{
+          overflow-x:auto;
+          background:var(--card);
+          border:1px solid var(--bd);
+          border-radius:16px;
+          box-shadow:var(--shadow);
+        }
+        table{
+          width:100%;
+          border-collapse:collapse;
+          font-size:.88rem;
+          min-width:640px;
+        }
+        th,td{
+          padding:10px 12px;
+          text-align:left;
+          border-bottom:1px solid var(--bd);
+          vertical-align:middle;
+        }
+        th{
+          color:var(--pri);
+          background:var(--pri2);
+          font-size:.78rem;
+          text-transform:uppercase;
+        }
+        .bars{
+          display:grid;
+          gap:10px;margin:8px 0 22px;
+        }
+        .br{
+          display:grid;
+          grid-template-columns:110px 1fr 30px;
+          gap:10px;
+          align-items:center;
+          font-size:.88rem;
+        }
+        .br i{
+          display:block;
+          height:14px;
+          border-radius:7px;
+          background:linear-gradient(90deg,var(--h1),var(--pri))
+        }
+        .empty{
+          color:var(--mut);
+          padding:24px;
+          text-align:center;
+        }
+        .msg{
+          margin-top:14px;
+          padding:10px 12px;
+          border-radius:12px;
+          background:#d9f5e6;
+          color:var(--ok);
+          font-weight:600;
+        }
+        .tabs{
+          display:flex;
+          gap:8px;
+          margin-bottom:12px;
+          flex-wrap:wrap;
+        }
+        .tabs button{
+          background:var(--card);
+          color:var(--mut);
+          border:1px solid var(--bd);
+          border-radius:99px
+        }
+        .tabs button.on{
+          background:var(--pri);
+          color:var(--onpri);
+          border-color:var(--pri)
+        }
+        section[data-v]{
+          display:none
+        }
+        section.show{
+          display:block
+        }
+        footer{
+          text-align:center;
+          color:var(--mut);
+          font-size:.8rem;
+          padding:20px
+        }
+</style>
+</head>
+<body>
+<header><div class="bar">
+<div class="logo">TemuKembali</div>
+<nav id="nav">
+<a href="#beranda" data-t="beranda">Beranda</a><a href="#hilang" data-t="hilang">Lapor Kehilangan</a><a href="#temuan" data-t="temuan">Lapor Penemuan</a><a href="#daftar" data-t="daftar">Daftar Barang</a><a href="#admin" data-t="admin">Admin</a>
+</nav></div></header>
+<main>
+
+<section data-v="beranda">
+<div class="hero"><h1>Kehilangan sesuatu? Temukan kembali.</h1><p>Temuan Barang hilang di jurusan Administrasi Publik<br> Universitas Negeri Gorontalo</p>
+<div class="sbox"><input id="hq" placeholder="Cari: "><select id="hk"></select><button id="hgo">Cari</button></div></div>
+<div class="stats" id="hs"></div>
+<h2 id="ht">Laporan terbaru</h2><div class="grid" id="hr"></div>
+</section>
+
+<section data-v="hilang"><h2>Formulir Laporan Kehilangan</h2>
+<form class="panel" id="f-hilang" onsubmit="return false"></form></section>
+
+<section data-v="temuan"><h2>Formulir Laporan Penemuan</h2>
+<form class="panel" id="f-temuan" onsubmit="return false"></form></section>
+
+<section data-v="daftar"><h2>Daftar Barang &amp; Status</h2>
+<div class="tabs" id="dtabs"></div>
+<div class="sbox" style="margin-bottom:12px"><input id="dq" placeholder="Cari nama barang atau lokasi…"></div>
+<div class="tw"><table><thead><tr><th>Barang</th><th>Jenis</th><th>Lokasi</th><th>Tanggal</th><th>Status</th></tr></thead><tbody id="dt"></tbody></table></div>
+</section>
+
+<section data-v="admin"><div id="adm"></div></section>
+</main>
+<footer>TemuKembali · Temuan Barang hilang di jurusan Administrasi Publik</footer>
+
+<script>
+var KAT=["Dompet & Tas","Elektronik","Kunci","Dokumen & Kartu","Pakaian","Lainnya"];
+var STS=["Hilang","Ditemukan","Verifikasi","Dikembalikan"];
+var SL={Hilang:"Hilang",Ditemukan:"Ditemukan",Verifikasi:"Dalam Verifikasi",Dikembalikan:"Dikembalikan"};
+var ADMIN_PASS="kelasb123",isAdm=false,filt="Semua";
+var seed=[
+{id:1,tipe:"hilang",nama:"Dompet kulit coklat",kat:"Dompet & Tas",lokasi:"Kantin Gedung B",tgl:"2026-10-24",desk:"Berisi KTP dan kartu ATM, ada gantungan kunci kecil.",kontak:"0812-3456-7890",pelapor:"Rina",status:"Hilang"},
+{id:2,tipe:"temuan",nama:"Kunci motor Honda",kat:"Kunci",lokasi:"Parkiran Barat",tgl:"2026-10-25",desk:"Gantungan karakter kucing warna oranye.",kontak:"0821-1111-2222",pelapor:"Pak Dedi (Satpam)",status:"Ditemukan"},
+{id:3,tipe:"hilang",nama:"Earbuds putih",kat:"Elektronik",lokasi:"Perpustakaan Lt. 2",tgl:"2026-10-22",desk:"Case putih dengan stiker bintang.",kontak:"0857-9999-0000",pelapor:"Andi",status:"Verifikasi"},
+{id:4,tipe:"temuan",nama:"Jaket denim biru",kat:"Pakaian",lokasi:"Ruang Kuliah 3.2",tgl:"2026-10-20",desk:"Ukuran L, ada nama di label dalam.",kontak:"0813-5555-6666",pelapor:"Sari",status:"Dikembalikan"},
+{id:5,tipe:"temuan",nama:"Kartu mahasiswa",kat:"Dokumen & Kartu",lokasi:"Musala",tgl:"2026-10-27",desk:"Atas nama Budi, angkatan 2024.",kontak:"0852-7777-8888",pelapor:"Joko",status:"Ditemukan"}];
+var D=load();
+function load(){try{var s=localStorage.getItem("tk_data");if(s)return JSON.parse(s)}catch(e){}return seed.slice()}
+function save(){try{localStorage.setItem("tk_data",JSON.stringify(D))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function fd(t){try{return new Date(t).toLocaleDateString("id-ID",{day:"numeric",month:"short",year:"numeric"})}catch(e){return t}}
+function bd(s){return '<span class="badge s-'+s+'">'+SL[s]+'</span>'}
+function jenis(t){return t==="hilang"?"Kehilangan":"Penemuan"}
+function card(x){return '<div class="item"><span class="badge">'+esc(x.kat)+'</span> '+bd(x.status)+'<h3>'+esc(x.nama)+'</h3><p>📍 '+esc(x.lokasi)+' · '+fd(x.tgl)+'</p><p>'+esc(x.desk)+'</p><p><b>'+jenis(x.tipe)+'</b> · Kontak: '+esc(x.kontak)+'</p></div>'}
+function match(x,q,k){q=(q||"").toLowerCase();var t=(x.nama+" "+x.lokasi+" "+x.desk+" "+x.kat).toLowerCase();return(!q||t.indexOf(q)>-1)&&(!k||k==="Semua"||x.kat===k)}
+
+function home(){
+ var q=$("hq").value,k=$("hk").value,r=D.filter(function(x){return match(x,q,k)}).slice().reverse();
+ var h=D.filter(function(x){return x.tipe==="hilang"}).length,t=D.length-h,b=D.filter(function(x){return x.status==="Dikembalikan"}).length;
+ $("hs").innerHTML=[[D.length,"Total laporan"],[h,"Barang hilang"],[t,"Barang ditemukan"],[b,"Sudah dikembalikan"]].map(function(a){return '<div class="stat"><b>'+a[0]+'</b><span>'+a[1]+'</span></div>'}).join("");
+ $("ht").textContent=(q||(k&&k!=="Semua"))?"Hasil pencarian ("+r.length+")":"Laporan terbaru";
+ $("hr").innerHTML=r.length?r.slice(0,q||(k&&k!=="Semua")?99:6).map(card).join(""):'<div class="empty">Tidak ada barang yang cocok. Coba kata kunci lain atau buat laporan baru.</div>';
+}
+
+function form(tipe){
+ var h=tipe==="hilang",f=$("f-"+tipe);
+ f.innerHTML='<label>Nama barang</label><input name="nama" required placeholder="Contoh: Dompet hitam">'+
+ '<div class="row"><div><label>Kategori</label><select name="kat">'+KAT.map(function(k){return"<option>"+esc(k)+"</option>"}).join("")+'</select></div>'+
+ '<div><label>'+(h?"Tanggal hilang":"Tanggal ditemukan")+'</label><input type="date" name="tgl" required></div></div>'+
+ '<label>'+(h?"Lokasi terakhir terlihat":"Lokasi penemuan")+'</label><input name="lokasi" required placeholder="Contoh: Kantin Gedung B">'+
+ '<label>Ciri-ciri / deskripsi</label><textarea name="desk" required placeholder="Warna, merek, isi, tanda khusus…"></textarea>'+
+ '<div class="row"><div><label>Nama pelapor</label><input name="pelapor" required></div><div><label>Kontak (HP/email)</label><input name="kontak" required></div></div>'+
+ '<div style="margin-top:16px"><button type="submit">Kirim Laporan</button></div><div id="m-'+tipe+'"></div>';
+ f.querySelector("[name=tgl]").value=new Date().toISOString().slice(0,10);
+ f.onsubmit=function(e){e.preventDefault();
+  var v={};["nama","kat","tgl","lokasi","desk","pelapor","kontak"].forEach(function(n){v[n]=f.querySelector("[name="+n+"]").value.trim()});
+  if(!v.nama||!v.lokasi||!v.desk||!v.pelapor||!v.kontak)return false;
+  v.id=Date.now();v.tipe=tipe;v.status=h?"Hilang":"Ditemukan";D.push(v);save();
+  f.reset();f.querySelector("[name=tgl]").value=new Date().toISOString().slice(0,10);
+  $("m-"+tipe).innerHTML='<div class="msg">✔ Laporan terkirim. Kode laporan: TK-'+String(v.id).slice(-5)+'. Pantau statusnya di Daftar Barang.</div>';
+  return false};
+}
+
+function list(){
+ var tabs=["Semua"].concat(STS);
+ $("dtabs").innerHTML=tabs.map(function(s){return '<button data-s="'+s+'" class="'+(filt===s?"on":"")+'">'+(s==="Semua"?"Semua":SL[s])+'</button>'}).join("");
+ var q=$("dq").value;
+ var r=D.filter(function(x){return(filt==="Semua"||x.status===filt)&&match(x,q,"")}).slice().reverse();
+ $("dt").innerHTML=r.length?r.map(function(x){return '<tr><td><b>'+esc(x.nama)+'</b><br><small>'+esc(x.kat)+'</small></td><td>'+jenis(x.tipe)+'</td><td>'+esc(x.lokasi)+'</td><td>'+fd(x.tgl)+'</td><td>'+bd(x.status)+'</td></tr>'}).join(""):'<tr><td colspan="5" class="empty">Belum ada data.</td></tr>';
+}
+
+function admin(){
+ var a=$("adm");
+ if(!isAdm){a.innerHTML='<div class="panel"><h2>Login Admin</h2><label>Kata sandi</label><input type="password" id="ap" <div style="margin-top:14px"><button id="al">Masuk</button></div><div id="ae"></div></div>';
+  $("al").onclick=function(){if($("ap").value===ADMIN_PASS){isAdm=true;admin()}else $("ae").innerHTML='<div class="msg" style="background:#ffe4e9;color:var(--bad)">Kata sandi salah.</div>'};return}
+ var c={};STS.forEach(function(s){c[s]=D.filter(function(x){return x.status===s}).length});
+ var mx=Math.max.apply(null,STS.map(function(s){return c[s]}).concat([1]));
+ var rate=D.length?Math.round(c.Dikembalikan/D.length*100):0;
+ a.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px"><h2 style="margin:0">Dashboard Admin</h2><button class="sec" id="ao">Keluar</button></div>'+
+ '<div class="stats">'+[[D.length,"Total laporan"],[c.Hilang,"Masih hilang"],[c.Verifikasi,"Dalam verifikasi"],[rate+"%","Tingkat pengembalian"]].map(function(x){return '<div class="stat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>'}).join("")+'</div>'+
+ '<h2>Ringkasan status</h2><div class="bars">'+STS.map(function(s){return '<div class="br"><span>'+SL[s]+'</span><div><i style="width:'+(c[s]/mx*100)+'%"></i></div><b>'+c[s]+'</b></div>'}).join("")+'</div>'+
+ '<h2>Kelola laporan</h2><div class="tw"><table><thead><tr><th>Barang</th><th>Pelapor</th><th>Kontak</th><th>Status</th><th></th></tr></thead><tbody>'+
+ D.slice().reverse().map(function(x){return '<tr><td><b>'+esc(x.nama)+'</b><br><small>'+jenis(x.tipe)+' · '+esc(x.lokasi)+'</small></td><td>'+esc(x.pelapor)+'</td><td>'+esc(x.kontak)+'</td><td><select data-id="'+x.id+'" class="ss">'+STS.map(function(s){return '<option value="'+s+'"'+(x.status===s?" selected":"")+'>'+SL[s]+'</option>'}).join("")+'</select></td><td><button class="del" data-del="'+x.id+'">Hapus</button></td></tr>'}).join("")+'</tbody></table></div>';
+ $("ao").onclick=function(){isAdm=false;admin()};
+ a.querySelectorAll(".ss").forEach(function(s){s.onchange=function(){var x=D.find(function(i){return String(i.id)===s.dataset.id});if(x){x.status=s.value;save();admin()}}});
+ a.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(){if(confirm("Hapus laporan ini?")){D=D.filter(function(i){return String(i.id)!==b.dataset.del});save();admin()}}});
+}
+
+function route(){
+ var t=(location.hash||"#beranda").slice(1);if(["beranda","hilang","temuan","daftar","admin"].indexOf(t)<0)t="beranda";
+ document.querySelectorAll("section[data-v]").forEach(function(s){s.classList.toggle("show",s.dataset.v===t)});
+ document.querySelectorAll("#nav a").forEach(function(a){a.classList.toggle("on",a.dataset.t===t)});
+ if(t==="beranda")home();if(t==="daftar")list();if(t==="admin")admin();window.scrollTo(0,0);
+}
+$("hk").innerHTML=["Semua"].concat(KAT).map(function(k){return"<option>"+esc(k)+"</option>"}).join("");
+$("hgo").onclick=home;$("hq").oninput=home;$("hk").onchange=home;$("dq").oninput=list;
+$("dtabs").onclick=function(e){var s=e.target.dataset.s;if(s){filt=s;list()}};
+form("hilang");form("temuan");
+window.addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
