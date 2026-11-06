@@ -460,7 +460,7 @@ function list(){
 
 function admin(){
  var a=$("adm");
- if(!isAdm){a.innerHTML='<div class="panel"><h2>Login Admin</h2><label>Kata sandi</label><input type="password" id="ap" <div style="margin-top:14px"><button id="al">Masuk</button></div><div id="ae"></div></div>';
+ if(!isAdm){a.innerHTML='<div class="panel"><h2>Login Admin</h2><label>Kata sandi</label><input type="password" id="ap" <br> <div style="margin-top:14px"><button id="al">Masuk</button></div><div id="ae"></div></div>';
   $("al").onclick=function(){if($("ap").value===ADMIN_PASS){isAdm=true;admin()}else $("ae").innerHTML='<div class="msg" style="background:#ffe4e9;color:var(--bad)">Kata sandi salah.</div>'};return}
  var c={};STS.forEach(function(s){c[s]=D.filter(function(x){return x.status===s}).length});
  var mx=Math.max.apply(null,STS.map(function(s){return c[s]}).concat([1]));
